@@ -8,8 +8,15 @@ public class ArrayOperations {
     public static void delete(int[] values, int pos) {
         if (pos < 0 || pos >= values.length) {
             return;
+        }else {
+            int index = pos;
+            while (index < values.length - 1) {
+                values[index] = values[index + 1];
+                index += 1;
+            }
+            values[values.length - 1] = 0;
+            return;
         }
-        // TODO: fill out this function
     }
 
     /**
@@ -21,7 +28,14 @@ public class ArrayOperations {
         if (pos < 0 || pos >= values.length) {
             return;
         }
-        // TODO: fill out this function
+        for ( int index = values.length - 1; index >= pos; index -= 1){
+            if (index == pos) {
+                values[index] = newInt;
+            }else {
+                values[index] = values[index - 1];
+            }
+        }
+        return;
     }
 
     /** 
@@ -29,8 +43,14 @@ public class ArrayOperations {
      *  the elements of B. 
      */
     public static int[] catenate(int[] A, int[] B) {
-        // TODO: fill out this function
-        return null;
+        int[] conbinationarr = new int[A.length + B.length];
+        for (int index = 0; index < A.length + B.length; index += 1){
+            if (index < A.length) {
+                conbinationarr[index] = A[index];
+            }else {
+                conbinationarr[index] = B[index - A.length];
+            }
+        }
+        return conbinationarr;
     }
-
 }
