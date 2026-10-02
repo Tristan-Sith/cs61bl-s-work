@@ -48,3 +48,4 @@ public class Potato {
         System.out.println("I am now a beautiful potato");
     }
 }
+  
