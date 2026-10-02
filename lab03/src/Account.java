@@ -5,10 +5,17 @@
 public class Account {
 
     private int balance;
+    private Account parentAccount;
 
     /** Initialize an account with the given balance. */
     public Account(int balance) {
         this.balance = balance;
+        this.parentAccount = null;
+    }
+
+    public Account(int balance, Account parent) {
+        this.balance = balance;
+        this.parentAccount = parent;
     }
 
     /** Returns the balance for the current account. */
@@ -36,8 +43,16 @@ public class Account {
             System.out.println("Cannot withdraw negative amount.");
             return false;
         } else if (balance < amount) {
-            System.out.println("Insufficient funds");
-            return false;
+            if (parentAccount == null) {
+                System.out.println("Insufficient funds");
+                return false;
+            }else-if(withdraw(balance - amount)) {
+                balance = 0;
+                return true;
+            }else{
+                System.out.println("Insufficient funds");
+                return false;
+            }
         } else {
             balance -= amount;
             return true;
