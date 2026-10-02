@@ -30,14 +30,17 @@ public class Account {
      * would leave a negative balance, print an error message and leave the
      * balance unchanged.
      */
-    public void withdraw(int amount) {
+    public boolean withdraw(int amount) {
         // TODO
         if (amount < 0) {
             System.out.println("Cannot withdraw negative amount.");
+            return false;
         } else if (balance < amount) {
             System.out.println("Insufficient funds");
+            return false;
         } else {
             balance -= amount;
+            return true;
         }
     }
 
