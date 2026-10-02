@@ -46,7 +46,7 @@ public class Account {
             if (parentAccount == null) {
                 System.out.println("Insufficient funds");
                 return false;
-            }else-if(withdraw(balance - amount)) {
+            }else if(parentAccount.withdraw(amount - balance)) {
                 balance = 0;
                 return true;
             }else{
