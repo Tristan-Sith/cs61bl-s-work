@@ -94,7 +94,16 @@ public class IntList {
         }
         if (obj instanceof IntList otherList) {
             // TODO: your code here
-
+            if (this.item != otherList.item) {
+                return false;
+            }
+            if (this.next == null && otherList.next == null) {
+                return true;
+            }
+            if (this.next == null || otherList.next == null) {
+                return false;
+            }
+            return this.next.equals(otherList.next);
         }
         return false;
     }
@@ -106,6 +115,11 @@ public class IntList {
      */
     public void add(int value) {
         // TODO: YOUR CODE HERE
+        IntList thisone = this;
+        while (thisone.next != null) {
+            thisone = thisone.next;
+        }
+        thisone.next = new IntList(value);
     }
 
     /**
@@ -115,7 +129,15 @@ public class IntList {
      */
     public int smallest() {
         // TODO: YOUR CODE HERE
-        return -1;
+        IntList thisone = this;
+        int small = item;
+        while (thisone.next != null) {
+            thisone = thisone.next;
+            if (thisone.item < small) {
+                small = thisone.item;
+            }
+        }
+        return small;
     }
 
     /**
@@ -125,7 +147,13 @@ public class IntList {
      */
     public int squaredSum() {
         // TODO: YOUR CODE HERE
-        return -1;
+        IntList thisone = this;
+        int sqsum = item * item;
+        while (thisone.next != null) {
+            thisone = thisone.next;
+            sqsum += thisone.item * thisone.item;
+        }
+        return sqsum;
     }
 
     /**
