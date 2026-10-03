@@ -48,7 +48,15 @@ public class IntList {
      */
     public int get(int position) {
         // TODO: YOUR CODE HERE
-        return -1;
+        if (position == 0) {
+            return item;
+        }else {
+            if (this.next == null) {
+                throw new IllegalArgumentException("YOUR MESSAGE HERE");
+            } else {
+                return next.get((position - 1));
+            }
+        }
     }
 
     /**
