@@ -211,7 +211,13 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         // TODO: YOUR CODE HERE
-        return null;
+        IntList newNode = new IntList(A.item);
+        if (A.next == null) {
+            newNode.next = B;
+        } else {
+            newNode.next = catenate(A.next, B);
+        }
+        return newNode;
     }
 
     /**
@@ -224,6 +230,12 @@ public class IntList {
      */
     public static IntList dcatenate(IntList A, IntList B) {
         // TODO: YOUR CODE HERE
-        return null;
+        IntList thisone = A;
+        IntList sta = thisone;
+        while (thisone.next != null) {
+            thisone = thisone.next;
+        }
+        thisone.next = B;
+        return sta;
     }
 }
