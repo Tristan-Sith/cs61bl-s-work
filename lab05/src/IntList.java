@@ -67,7 +67,11 @@ public class IntList {
      */
     public String toString() {
         // TODO: YOUR CODE HERE
-        return null;
+        String swap = String.valueOf(item);
+        if (next != null) {
+            swap = swap + " " + next.toString();
+        }
+        return swap;
     }
 
     /**
