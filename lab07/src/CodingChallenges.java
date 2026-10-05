@@ -13,7 +13,16 @@ public class CodingChallenges {
      */
     public static int missingNumber(int[] values) {
         // TODO
-        return -1;
+        Set<Integer> seen = new HashSet<>();
+        for (int i = 0; i < values.length + 1; i += 1) {
+            seen.add(i);
+        }
+
+        for (int i = 0; i < values.length; i += 1) {
+            seen.remove(values[i]);
+        }
+
+        return seen.stream().findFirst().get();
     }
 
     /**
@@ -22,6 +31,17 @@ public class CodingChallenges {
      */
     public static boolean isPermutation(String s1, String s2) {
         // TODO
-        return false;
+        Map<Character, Integer> characterCounts1 = new HashMap<>();
+        Map<Character, Integer> characterCounts2 = new HashMap<>();
+        for (int i = 0; i < s1.length(); i += 1) {
+            char c = s1.charAt(i);
+            characterCounts1.merge(c, 1, Integer::sum);
+        }
+        for (int i = 0; i < s2.length(); i += 1) {
+            char c = s2.charAt(i);
+            characterCounts2.merge(c, 1, Integer::sum);
+        }
+
+        return characterCounts1.equals(characterCounts2);
     }
 }
