@@ -35,7 +35,18 @@ public class AmoebaFamily implements Iterable<AmoebaFamily.Amoeba> {
     /* Returns the longest name in this src.AmoebaFamily. */
     public String longestName() {
         // TODO: YOUR CODE HERE
-        return "";
+        return longestNameHelper(root);
+    }
+
+    private String longestNameHelper(Amoeba node) {
+        String longest = node.name;
+        for (Amoeba child : node.children) {
+            String childLongest = longestNameHelper(child);
+            if (childLongest.length() > longest.length()) {
+                longest = childLongest;
+            }
+        }
+        return longest;
     }
 
     /* Returns an Iterator for this src.AmoebaFamily. */
@@ -120,24 +131,41 @@ public class AmoebaFamily implements Iterable<AmoebaFamily.Amoeba> {
     public class AmoebaDFSIterator implements Iterator<Amoeba> {
 
         // Optional TODO: IMPLEMENT THE CLASS HERE
+        private ArrayList<Amoeba> nodeList;
+        private int ptr;
 
         /* AmoebaDFSIterator constructor. Sets up all of the initial information
            for the AmoebaDFSIterator. */
         public AmoebaDFSIterator() {
+            nodeList = new ArrayList<>();
+            ptr = 0;
+            dfsTraverse(root);
         }
 
         /* Returns true if there is a next element to return. */
         public boolean hasNext() {
-            return false;
+            return ptr < nodeList.size();
         }
 
         /* Returns the next element. */
         public Amoeba next() {
-            return null;
+            Amoeba current = nodeList.get(ptr);
+            ptr++;
+            return current;
         }
 
         public void remove() {
             throw new UnsupportedOperationException();
+        }
+
+        private void dfsTraverse(Amoeba node) {
+            if (node == null) {
+                return;
+            }
+            nodeList.add(node);
+            for (Amoeba child : node.getChildren()) {
+                dfsTraverse(child);
+            }
         }
     }
 
