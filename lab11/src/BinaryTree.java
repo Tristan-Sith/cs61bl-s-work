@@ -158,14 +158,36 @@ public class BinaryTree<T> {
     /* Returns the height of the tree. */
     public int height() {
         // TODO: YOUR CODE HERE
-        return 0;
+        if (this.root == null) {
+            return 0;
+        }else {
+            return heightHelper(root);
+        }
     }
+
+    private int heightHelper(TreeNode<T> node) {
+        if (node == null) {
+            return 0;
+        }else {
+            return Math.max(heightHelper(node.left), heightHelper(node.right)) + 1;
+        }
+
+    }
+
 
     /* Returns true if the tree's left and right children are the same height
        and are themselves completely balanced. */
     public boolean isCompletelyBalanced() {
         // TODO: YOUR CODE HERE
-        return false;
+        return isCompletelyBalancedHelper(root);
+    }
+
+    private boolean isCompletelyBalancedHelper(TreeNode<T> node) {
+        if (node == null) {
+            return true;
+        }else {
+            return (Math.abs(heightHelper(node.left) - heightHelper(node.right)) <= 1) && isCompldetelyBalancedHelper(node.left) && isCompldetelyBalancedHelper(node.right);
+        }
     }
 
     /* Returns a BinaryTree representing the Fibonacci calculation for N. */
