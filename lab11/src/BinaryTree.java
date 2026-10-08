@@ -186,7 +186,7 @@ public class BinaryTree<T> {
         if (node == null) {
             return true;
         }else {
-            return (Math.abs(heightHelper(node.left) - heightHelper(node.right)) <= 1) && isCompldetelyBalancedHelper(node.left) && isCompldetelyBalancedHelper(node.right);
+            return (Math.abs(heightHelper(node.left) - heightHelper(node.right)) <= 1) && isCompletelyBalancedHelper(node.left) && isCompletelyBalancedHelper(node.right);
         }
     }
 
@@ -194,6 +194,20 @@ public class BinaryTree<T> {
     public static BinaryTree<Integer> fibTree(int N) {
         BinaryTree<Integer> result = new BinaryTree<Integer>();
         // TODO: YOUR CODE HERE
-        return null;
+        TreeNode<Integer> fibnode0 = new TreeNode<>(0);
+        TreeNode<Integer> fibnode1 = new TreeNode<>(1);
+        if (N == 0) {
+            result.root = fibnode0;
+        } else if (N == 1) {
+            result.root = fibnode1;
+        } else {
+            BinaryTree<Integer> fibtreeleft = fibTree(N - 1);
+            BinaryTree<Integer> fibtreeright = fibTree(N - 2);
+            int lefts = fibtreeleft.root.item;
+            int rights = fibtreeright.root.item;
+            TreeNode<Integer> fibnodenow = new TreeNode<>(lefts + rights, fibtreeleft.root, fibtreeright.root);
+            result.root = fibnodenow;
+        }
+        return result;
     }
 }
