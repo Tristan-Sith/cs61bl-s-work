@@ -13,20 +13,25 @@ public class MinHeapPQ<T> implements PriorityQueue<T> {
        from the MinHeapPQ. */
     public T peek() {
         // TODO: YOUR CODE HERE
-        return null;
+        return heap.findMin().item();
     }
 
     /* Inserts ITEM with the priority value PRIORITYVALUE into the MinHeapPQ. If
        ITEM is already in the MinHeapPQ, throw an IllegalArgumentException. */
     public void insert(T item, double priorityValue) {
         // TODO: YOUR CODE HERE
+        heap.insert(new PriorityItem(item, priorityValue));
     }
 
     /* Returns the item with the highest priority (smallest priority value), and
        removes it from the MinHeapPQ. If there is nothing in the queue, return null.*/
     public T poll() {
         // TODO: YOUR CODE HERE
-        return null;
+        PriorityItem min = heap.removeMin();
+        if (min == null) {
+            return null;
+        }
+        return min.item();
     }
 
     /* Changes the PriorityItem with item ITEM to have priority value
@@ -39,7 +44,7 @@ public class MinHeapPQ<T> implements PriorityQueue<T> {
     /* Returns the number of items in the MinHeapPQ. */
     public int size() {
         // TODO: YOUR CODE HERE
-        return 0;
+        return heap.size();
     }
 
     /* Returns true if ITEM is stored in our MinHeapPQ. Note: Any priority value
