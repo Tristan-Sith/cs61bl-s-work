@@ -115,31 +115,47 @@ public class MinHeap<E extends Comparable<E>> {
     /* Bubbles down the element currently at index INDEX. */
     private void bubbleDown(int index) {
         // TODO: YOUR CODE HERE
-        while (index * 2 < size
-                && getElement(index).compareTo(getElement(getLeftOf(index))) > 0
-                && getElement(index).compareTo(getElement(getRightOf(index))) > 0) {
-            int minChildIndex = min(getLeftOf(index), getRightOf(index));
-            swap(minChildIndex, index);
-            index = minChildIndex;
+        while (getElement(getLeftOf(index)) != null) {
+            int smallerChild = getLeftOf(index);
+            if (getElement(getRightOf(index)) != null) {
+                smallerChild = min(getLeftOf(index), getRightOf(index));
+            }
+            if (getElement(index).compareTo(getElement(smallerChild)) <= 0) {
+                break;
+            }
+            swap(index, smallerChild);
+            index = smallerChild;
         }
     }
 
     /* Returns the number of elements in the MinHeap. */
     public int size() {
         // TODO: YOUR CODE HERE
-        return 0;
+        return contents.size() - 1;
     }
 
     /* Inserts ELEMENT into the MinHeap. If ELEMENT is already in the MinHeap,
        throw an IllegalArgumentException.*/
     public void insert(E element) {
         // TODO: YOUR CODE HERE
+        if (contains(element)) {
+            throw new IllegalArgumentException();
+        }
+        setElement(contents.size(), element);
+        bubbleUp(contents.size() - 1);
     }
 
     /* Returns and removes the smallest element in the MinHeap, or null if there are none. */
     public E removeMin() {
         // TODO: YOUR CODE HERE
-        return null;
+        E min = findMin();
+        if (min == null) {
+            return null;
+        }
+        swap(1, contents.size() - 1);
+        contents.remove(contents.size() - 1);
+        bubbleDown(1);
+        return min;
     }
 
     /* Replaces and updates the position of ELEMENT inside the MinHeap, which
