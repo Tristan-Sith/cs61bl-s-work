@@ -70,42 +70,58 @@ public class MinHeap<E extends Comparable<E>> {
     /* Returns the index of the left child of the element at index INDEX. */
     private int getLeftOf(int index) {
         // TODO: YOUR CODE HERE
-        return -1;
+        return 2 * index;
     }
 
     /* Returns the index of the right child of the element at index INDEX. */
     private int getRightOf(int index) {
         // TODO: YOUR CODE HERE
-        return -1;
+        return 2 * index + 1;
     }
 
     /* Returns the index of the parent of the element at index INDEX. */
     private int getParentOf(int index) {
-        // TODO: YOUR CODE HERE
-        return -1;
+        // TODO: YOUR CODE
+        int re = index / 2;
+        return re;
     }
 
     /* Returns the index of the smaller element. At least one index has a
        non-null element. If the elements are equal, return either index. */
     private int min(int index1, int index2) {
         // TODO: YOUR CODE HERE
-        return -1;
+        if (getElement(index1).compareTo(getElement(index2)) < 0) {
+            return index1;
+        }else {
+            return index2;
+        }
     }
 
     /* Returns but does not remove the smallest element in the MinHeap. */
     public E findMin() {
         // TODO: YOUR CODE HERE
-        return null;
+        return getElement(1);
     }
 
     /* Bubbles up the element currently at index INDEX. */
     private void bubbleUp(int index) {
         // TODO: YOUR CODE HERE
+        while (index != 1 && getElement(index).compareTo(getElement(getParentOf(index))) < 0) {
+            swap(index, getParentOf(index));
+            index = getParentOf(index);
+        }
     }
 
     /* Bubbles down the element currently at index INDEX. */
     private void bubbleDown(int index) {
         // TODO: YOUR CODE HERE
+        while (index * 2 < size
+                && getElement(index).compareTo(getElement(getLeftOf(index))) > 0
+                && getElement(index).compareTo(getElement(getRightOf(index))) > 0) {
+            int minChildIndex = min(getLeftOf(index), getRightOf(index));
+            swap(minChildIndex, index);
+            index = minChildIndex;
+        }
     }
 
     /* Returns the number of elements in the MinHeap. */
