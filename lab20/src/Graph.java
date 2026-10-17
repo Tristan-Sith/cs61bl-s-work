@@ -120,12 +120,128 @@ public class Graph {
 
     public Graph prims(int start) {
         // TODO: YOUR CODE HERE
-        return null;
+        if (!containsVertex(start)) {
+            return null;
+        }
+
+        Graph mst = new Graph();
+        mst.addVertex(start);
+        HashSet<Integer> visited = new HashSet<>();
+        HashMap<Integer, Edge> distFromTree = new HashMap<>();
+        TreeSet<Integer> fringe = new TreeSet<>(new Comparator<Integer>() {
+            public int compare(Integer v1, Integer v2) {
+                int cmp = Integer.compare(distFromTree.get(v1).getWeight(),
+                                          distFromTree.get(v2).getWeight());
+                return cmp != 0 ? cmp : Integer.compare(v1, v2);
+            }
+        });
+
+        visited.add(start);
+        for (Edge e : getEdges(start)) {
+            int dest = e.getDest();
+            if (visited.contains(dest)) {
+                continue;
+            }
+            Edge old = distFromTree.get(dest);
+            if (old == null || e.getWeight() < old.getWeight()) {
+                if (old != null) {
+                    fringe.remove(dest);
+                }
+                distFromTree.put(dest, e);
+                fringe.add(dest);
+            }
+        }
+
+        while (!fringe.isEmpty()) {
+            int v = fringe.pollFirst();
+            Edge e = distFromTree.get(v);
+            visited.add(v);
+            mst.addEdge(e);
+
+            for (Edge next : getEdges(v)) {
+                int dest = next.getDest();
+                if (visited.contains(dest)) {
+                    continue;
+                }
+                Edge old = distFromTree.get(dest);
+                if (old == null || next.getWeight() < old.getWeight()) {
+                    if (old != null) {
+                        fringe.remove(dest);
+                    }
+                    distFromTree.put(dest, next);
+                    fringe.add(dest);
+                }
+            }
+        }
+
+        if (mst.getAllEdges().size() != getAllVertices().size() - 1) {
+            return null;
+        }
+        return mst;
     }
 
     public Graph kruskals() {
         // TODO: YOUR CODE HERE
-        return null;
+        Graph mst = new Graph();
+        TreeSet<Integer> all = getAllVertices();
+        for (int v : all) {
+            mst.addVertex(v);
+        }
+
+        HashMap<Integer, Integer> parent = new HashMap<>();
+        HashMap<Integer, Integer> size = new HashMap<>();
+        for (int v : all) {
+            parent.put(v, v);
+            size.put(v, 1);
+        }
+
+        List<Edge> sortedEdges = new ArrayList<>(allEdges);
+        sortedEdges.sort(new Comparator<Edge>() {
+            public int compare(Edge e1, Edge e2) {
+                int cmp = Integer.compare(e1.getWeight(), e2.getWeight());
+                if (cmp == 0) {
+                    cmp = Integer.compare(e1.getSource(), e2.getSource());
+                }
+                if (cmp == 0) {
+                    cmp = Integer.compare(e1.getDest(), e2.getDest());
+                }
+                return cmp;
+            }
+        });
+
+        for (Edge e : sortedEdges) {
+            int root1 = find(parent, e.getSource());
+            int root2 = find(parent, e.getDest());
+            if (root1 == root2) {
+                continue;
+            }
+
+            if (size.get(root1) < size.get(root2)) {
+                int temp = root1;
+                root1 = root2;
+                root2 = temp;
+            }
+            parent.put(root2, root1);
+            size.put(root1, size.get(root1) + size.get(root2));
+            mst.addEdge(e);
+        }
+        if (mst.getAllEdges().size() != all.size() - 1) {
+            return null;
+        }
+        return mst;
+    }
+
+    private int find(HashMap<Integer, Integer> parent, int v) {
+        int root = v;
+        while (parent.get(root).intValue() != root) {
+            root = parent.get(root);
+        }
+        while (parent.get(v).intValue() != root) {
+            int next = parent.get(v);
+            parent.put(v, root);
+            v = next;
+        }
+        return root;
     }
 
     /* A comparator to help you compare vertices in terms of
