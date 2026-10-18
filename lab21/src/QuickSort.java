@@ -22,6 +22,13 @@ public class QuickSort {
      */
     private static void quickSort(int[] arr, int start, int end) {
         // TODO: Implement quicksort
+        if (end - start <= 1) {
+            return;
+        }
+
+        int[] bounds = partition(arr, start, end);
+        quickSort(arr, start, bounds[0]);
+        quickSort(arr, bounds[1], end);
         
     }
 
@@ -40,6 +47,28 @@ public class QuickSort {
      */
     private static int[] partition(int[] arr, int start, int end) {
         // TODO: Implement partition
-        return null;
+        int pivot = arr[start];
+        int lessEnd = start;
+        int greaterStart = end;
+        int i = start + 1;
+
+        while (i < greaterStart) {
+            if (arr[i] < pivot) {
+                int temp = arr[i];
+                arr[i] = arr[lessEnd];
+                arr[lessEnd] = temp;
+                lessEnd++;
+                i++;
+            } else if (arr[i] > pivot) {
+                greaterStart--;
+                int temp = arr[i];
+                arr[i] = arr[greaterStart];
+                arr[greaterStart] = temp;
+            } else {
+                i++;
+            }
+        }
+
+        return new int[]{lessEnd, greaterStart};
     }
 }   

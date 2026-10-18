@@ -17,6 +17,11 @@ public class HeapSort {
      */
     public static void sort(int[] arr) {
         // TODO: Implement heap sort
+        heapify(arr);
+        for (int end = arr.length - 1; end > 0; end--) {
+            swap(arr, 0, end);
+            bubbleDown(arr, 0, end);
+        }
     }
 
     /**
@@ -29,6 +34,9 @@ public class HeapSort {
      */
     private static void heapify(int[] arr) {
         // TODO: Implement heapify
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            bubbleDown(arr, i, arr.length);
+        }
     }
 
 
